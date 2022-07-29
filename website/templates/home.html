@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+  %}
+  <h1 align="center">Welcome back!</h1>
+</ br>  
+  <form method="POST" align="center">
+    <h3 align="center">Please select the month you desire to access.</h3>
+    </ br>
+    </ br>
+    <div class="form-group">
+        <label for="month">Month</label>  
+        <select id="month"name="month">
+          <option value="January">January</option>
+          <option value="February">February</option>
+          <option value="March">March</option>
+          <option value="April">April</option>
+          <option value="May">May</option>
+          <option value="June">June</option>
+          <option value="July">July</option>
+          <option value="August">August</option>
+          <option value="September">September</option>
+          <option value="October">October</option>
+          <option value="November">November</option>
+          <option value="December">December</option>
+        </select>
+    </div>
+    <button type="submit" class="btn btn-primary">Access</button>
+  </form>
+
+  {% endblock %}

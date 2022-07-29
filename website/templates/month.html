@@ -1,0 +1,48 @@
+{% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
+    %}
+
+    <h1 align="center">Transactions in {{month}}</h1>
+    <h3 align="center">Please format your input as follows:</h3>
+    <h4 align="center">income/expense;amount;day of the month with no spaces and 1 for expense and 0 for income</h4>
+    <ul class="list-group list-group-flush" id="transactions">
+      {% for transaction in user.transactions|sort(attribute="day", reverse=True) if transaction.month==month%}    
+
+      <li class="list-group-item">
+        {% if transaction.isExpense %}
+          {% set message = "-" ~ transaction.amount ~ " on day " + transaction.day %}
+          {{ message }}
+        {% else %}
+          {% set message = transaction.amount ~ " on day " + transaction.day %}
+          {{ message }}
+        {% endif %}
+        <button type="button" class="close" onClick="deletetransaction({{ transaction.id }})">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </li>
+      {% endfor %}
+    </ul>
+    <form method="POST">
+      <textarea name="transaction" id="transaction" class="form-control"></textarea>
+      <br />
+      <div align="center">
+        <button id="submitBtn" type="submit" class="btn btn-primary">Add transaction</button>
+      </div>
+    <script>
+        var input=document.getElementById("transaction");
+        input.addEventListener("keypress", function(event){
+          if (event.key=="Enter"){
+            event.preventDefault();
+            document.getElementById("submitBtn").click();
+          }
+        })
+    </script>
+    </form>
+    <p>
+      {% if netBenefit>=0 %}
+        {{"The"}} <b>{{"net benefit" }}</b> {{"was "+ netBenefit |string() +" €."}}
+      {% else %}
+        {{"The"}} <b>{{"net loss"}}</b> {{"was " + (netBenefit | abs)|string() +" €."}}
+      {% endif %}
+    </p>
+    
+    {% endblock %}

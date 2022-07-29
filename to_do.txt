@@ -1,0 +1,13 @@
+
+- add monthly costs feature to automate them
+- add monthly or annual goals and then if reached or not
+- explain 1 is for expense and 0 for income
+
+to improve:
+- dropdown menu and home page (background)
+
+To do now: 
+- transaction viewed by user is green or red depending on its status 
+- matplotlib of transaction
+- When deleting transaction refresh month page and not go home
+
