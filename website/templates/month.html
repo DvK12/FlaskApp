@@ -1,6 +1,8 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
     %}
-
+    <head>
+    <link rel="stylesheet" href="style.css">
+    </head>
     <h1 align="center">Transactions in {{month}}</h1>
     <h3 align="center">Please format your input as follows:</h3>
     <h4 align="center">income/expense;amount;day of the month with no spaces and 1 for expense and 0 for income</h4>
@@ -10,7 +12,7 @@
       <li class="list-group-item">
         {% if transaction.isExpense %}
           {% set message = "-" ~ transaction.amount ~ " on day " + transaction.day %}
-          {{ message }}
+          <span class="red">{{ message }}</span>
         {% else %}
           {% set message = transaction.amount ~ " on day " + transaction.day %}
           {{ message }}
@@ -39,9 +41,9 @@
     </form>
     <p>
       {% if netBenefit>=0 %}
-        {{"The"}} <b>{{"net benefit" }}</b> {{"was "+ netBenefit |string() +" €."}}
+        {{month+"'s"}} <b>{{"net benefit" }}</b> {{"was "+ netBenefit |string() +" €."}}
       {% else %}
-        {{"The"}} <b>{{"net loss"}}</b> {{"was " + (netBenefit | abs)|string() +" €."}}
+      {{month+"'s"}} <b>{{"net loss"}}</b> {{"was " + (netBenefit | abs)|string() +" €."}}
       {% endif %}
     </p>
     
