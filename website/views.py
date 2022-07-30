@@ -27,9 +27,13 @@ def isFormatValid(transaction):
         return False
     for field in fields:
         for character in field:
-            if ord(character) < 48 or ord(character) > 57:
+            isAlpha = character.isalpha()
+            isNum = character.isnumeric()
+            if ((not isNum) and (not isAlpha)) and ord(character) != 46:
+
+                print(character)
                 return False
-    if int(fields[0]) != 1 and int(fields[0]) != 0:
+    if int(fields[0]) not in (0, 1):
         return False
     return True
 
@@ -41,7 +45,7 @@ def getDay(transaction):
 
 def getAmount(transaction):
     fields = getFields(transaction)
-    return int(fields[1])
+    return round(float(fields[1]), 2)
 
 
 def getIsExpense(transaction):

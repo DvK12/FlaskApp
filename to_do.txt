@@ -7,7 +7,8 @@ to improve:
 - dropdown menu and home page (background)
 
 To do now: 
-- transaction viewed by user is green or red depending on its status 
 - matplotlib of transaction
 - When deleting transaction refresh month page and not go home
-
+- Add concpet of transaction
+- handle invaliud characters in input
+- sort transactions by amount if dates equal
