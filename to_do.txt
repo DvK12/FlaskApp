@@ -1,14 +1,11 @@
 
-- add monthly costs feature to automate them
-- add monthly or annual goals and then if reached or not
+- add monthly costs feature to automate them (net benefit is.. and after recurrent costs is...)
 - explain 1 is for expense and 0 for income
 
 to improve:
 - dropdown menu and home page (background)
 
 To do now: 
-- matplotlib of transaction
 - When deleting transaction refresh month page and not go home
-- Add concpet of transaction
-- handle invaliud characters in input
-- sort transactions by amount if dates equal
+- matplotlib of transaction
+
