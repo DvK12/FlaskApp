@@ -3,6 +3,7 @@ from flask_login import login_required, current_user
 from .models import Transaction
 from . import db
 import json
+import matplotlib.pyplot as plt
 
 views = Blueprint("views", __name__)
 
@@ -113,9 +114,9 @@ def delete_transation():
     transaction = json.loads(request.data)
     transactionId = transaction["transactionId"]
     transaction = Transaction.query.get(transactionId)
-
     if transaction:
         if transaction.user_id == current_user.id:
             db.session.delete(transaction)
             db.session.commit()
+            print("Transaction deleted")
     return jsonify({})

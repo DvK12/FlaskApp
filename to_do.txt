@@ -4,6 +4,8 @@
 
 to improve:
 - dropdown menu and home page (background)
+- reorganize functions in another file and then import it
+
 
 To do now: 
 - When deleting transaction refresh month page and not go home

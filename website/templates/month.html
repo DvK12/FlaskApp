@@ -10,15 +10,15 @@
  
         {% if transaction.isExpense %}
           {% set message = "-" ~ transaction.amount ~ " on day " ~ transaction.day %}
-          <b><span style="color:red">{{ message }}</span>{{" | "}}></b><i>{{transaction.concept}}</i>
+          <b><span style="color:red">{{ message }}</span>{{" | "}}</b><i>{{transaction.concept}}</i>
         {% else %}
           {% set message = "+" ~ transaction.amount ~ " on day " ~ transaction.day %}
           <b><span style="color:rgba(68, 150, 1, 0.616)">{{ message }}</span>{{" | "}}</b><i>{{transaction.concept}}</i>
         {% endif %}
-
-        <button type="button" class="close" onClick="deletetransaction({{ transaction.id }})">
+        <button type="button" class="close" onClick="deletetransaction( {{transaction.id}} )">
           <span aria-hidden="true">&times;</span>
         </button>
+
       </li>
       {% endfor %}
     </ul>
