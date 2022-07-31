@@ -21,20 +21,25 @@ def getFields(transaction):
 
 def isFormatValid(transaction):
     fields = getFields(transaction)
-    if len(fields) != 3 or len(transaction) < 1:
+    if (
+        len(fields) != 4
+        or len(transaction) < 1
+        or int(fields[2]) < 1
+        or int(fields[2]) > 31
+        or int(fields[0]) not in (0, 1)
+    ):
         return False
-    if int(fields[2]) < 1 or int(fields[2]) > 31:
-        return False
+
     for field in fields:
         for character in field:
             isAlpha = character.isalpha()
             isNum = character.isnumeric()
-            if ((not isNum) and (not isAlpha)) and ord(character) != 46:
-
-                print(character)
+            if (
+                ((not isNum) and (not isAlpha))
+                and ord(character) != 46
+                and ord(character) != 32
+            ):
                 return False
-    if int(fields[0]) not in (0, 1):
-        return False
     return True
 
 
@@ -53,6 +58,25 @@ def getIsExpense(transaction):
     return bool(int(fields[0]))
 
 
+def getConcept(transaction):
+    return str(getFields(transaction)[3])
+
+
+def sortTransactions(user, month):
+    transactions = [
+        transaction for transaction in user.transactions if transaction.month == month
+    ]
+
+    return sorted(
+        transactions,
+        key=lambda transaction: (
+            transaction.day,
+            (-1) * transaction.amount if transaction.isExpense else transaction.amount,
+        ),
+        reverse=True,
+    )
+
+
 @views.route("/month/<month>", methods=["GET", "POST"])
 @login_required
 def month(month):
@@ -69,6 +93,7 @@ def month(month):
                 day=getDay(transaction),
                 amount=getAmount(transaction),
                 isExpense=getIsExpense(transaction),
+                concept=getConcept(transaction),
             )
             db.session.add(new_transaction)
             db.session.commit()
@@ -79,6 +104,7 @@ def month(month):
         user=current_user,
         month=month,
         netBenefit=getNetBenefit(user=current_user, month=month),
+        transactionList=sortTransactions(user=current_user, month=month),
     )
 
 

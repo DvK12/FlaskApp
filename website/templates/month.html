@@ -2,18 +2,20 @@
     %}
     <h1 align="center">Transactions in {{month}}</h1>
     <h3 align="center">Please format your input as follows:</h3>
-    <h4 align="center">income/expense;amount;day of the month with no spaces and 1 for expense and 0 for income</h4>
+    <h4 align="center"><b>income/expense;amount;day of the month;concept</b> <i>(no spaces and 1 for expense and 0 for income)</i></h4>
     <ul class="list-group list-group-flush" id="transactions">
-      {% for transaction in user.transactions|sort(attribute="day", reverse=True) if transaction.month==month%}    
+      {% for transaction in transactionList%}    
 
       <li class="list-group-item">
+ 
         {% if transaction.isExpense %}
-          {% set message = "-" ~ transaction.amount ~ " on day " + transaction.day %}
-          <span style="color:red">{{ message }}</span>
+          {% set message = "-" ~ transaction.amount ~ " on day " ~ transaction.day %}
+          <b><span style="color:red">{{ message }}</span>{{" | "}}></b><i>{{transaction.concept}}</i>
         {% else %}
-          {% set message = "+" ~transaction.amount ~ " on day " + transaction.day %}
-          <span style="color:rgba(68, 150, 1, 0.616)">{{ message }}</span>
+          {% set message = "+" ~ transaction.amount ~ " on day " ~ transaction.day %}
+          <b><span style="color:rgba(68, 150, 1, 0.616)">{{ message }}</span>{{" | "}}</b><i>{{transaction.concept}}</i>
         {% endif %}
+
         <button type="button" class="close" onClick="deletetransaction({{ transaction.id }})">
           <span aria-hidden="true">&times;</span>
         </button>

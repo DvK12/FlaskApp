@@ -5,6 +5,7 @@ from sqlalchemy.sql import func
 
 class Transaction(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    concept = db.Column(db.String(10000))
     data = db.Column(db.String(10000))
     month = db.Column(db.String(30))
 
