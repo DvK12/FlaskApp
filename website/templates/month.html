@@ -46,5 +46,5 @@
       {{month+"'s"}} <b>{{"net loss"}}</b> {{"was " + (netBenefit | abs)|string() +" €."}}
       {% endif %}
     </p>
-    
+    <p>Amount of sales tax to be paid : {{taxAmount~" €."}}</p>
     {% endblock %}

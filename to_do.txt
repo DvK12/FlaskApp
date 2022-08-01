@@ -9,5 +9,6 @@ to improve:
 
 To do now: 
 - When deleting transaction refresh month page and not go home
-- matplotlib of transaction
-
+- matplotlib of transaction, home and month (display with button)
+- recurring costs
+- display sales tax

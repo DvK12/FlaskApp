@@ -8,12 +8,20 @@ import matplotlib.pyplot as plt
 views = Blueprint("views", __name__)
 
 
+def getTaxAmount(user, month):
+    TaxAmount = 0
+    for transaction in user.transactions:
+        if transaction.month == month and not transaction.isExpense:
+            TaxAmount += round(transaction.amount / 11, 2)
+    return TaxAmount
+
+
 def getNetBenefit(user, month):
     netBenefit = 0
     for transaction in user.transactions:
         if transaction.month == month:
             netBenefit += (1 - 2 * transaction.isExpense) * transaction.amount
-    return netBenefit
+    return netBenefit - getTaxAmount(user=user, month=month)
 
 
 def getFields(transaction):
@@ -78,6 +86,27 @@ def sortTransactions(user, month):
     )
 
 
+def getMonthlyRevenues(user):
+    months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ]
+    monthlyRevenues = []
+    for month in months:
+        monthlyRevenues.append(getNetBenefit(user=user, month=month))
+    return monthlyRevenues
+
+
 @views.route("/month/<month>", methods=["GET", "POST"])
 @login_required
 def month(month):
@@ -106,6 +135,8 @@ def month(month):
         month=month,
         netBenefit=getNetBenefit(user=current_user, month=month),
         transactionList=sortTransactions(user=current_user, month=month),
+        monthlyRevenues=getMonthlyRevenues,
+        taxAmount=getTaxAmount(user=current_user, month=month),
     )
 
 
