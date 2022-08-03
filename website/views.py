@@ -143,11 +143,11 @@ def month(month):
 @views.route("/delete-transaction", methods=["POST"])
 def delete_transation():
     transaction = json.loads(request.data)
+    print(transaction)
     transactionId = transaction["transactionId"]
     transaction = Transaction.query.get(transactionId)
     if transaction:
         if transaction.user_id == current_user.id:
             db.session.delete(transaction)
             db.session.commit()
-            print("Transaction deleted")
     return jsonify({})

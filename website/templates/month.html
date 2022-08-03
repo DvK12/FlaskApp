@@ -7,7 +7,6 @@
       {% for transaction in transactionList%}    
 
       <li class="list-group-item">
- 
         {% if transaction.isExpense %}
           {% set message = "-" ~ transaction.amount ~ " on day " ~ transaction.day %}
           <b><span style="color:red">{{ message }}</span>{{" | "}}</b><i>{{transaction.concept}}</i>
@@ -15,11 +14,12 @@
           {% set message = "+" ~ transaction.amount ~ " on day " ~ transaction.day %}
           <b><span style="color:rgba(68, 150, 1, 0.616)">{{ message }}</span>{{" | "}}</b><i>{{transaction.concept}}</i>
         {% endif %}
-        <button type="button" class="close" onClick="deletetransaction( {{transaction.id}} )">
+        {% set dataTuple=[transaction.id, month]%}
+        <button type="button" class="close" onClick="deletetransaction( {{dataTuple}} )">
           <span aria-hidden="true">&times;</span>
         </button>
-
       </li>
+      
       {% endfor %}
     </ul>
     <form method="POST">
@@ -46,5 +46,5 @@
       {{month+"'s"}} <b>{{"net loss"}}</b> {{"was " + (netBenefit | abs)|string() +" €."}}
       {% endif %}
     </p>
-    <p>Amount of sales tax to be paid : {{taxAmount~" €."}}</p>
+    <p>Sales tax to be paid : {{taxAmount|round(2)~" €."}}</p>
     {% endblock %}
