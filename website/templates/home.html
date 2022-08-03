@@ -1,6 +1,6 @@
 {% extends "base.html" %} {% block title %}Home{% endblock %} {% block content
-  %}
-
+  %}    
+    
   <h1 align="center">Welcome back!</h1>
 </ br>  
   <form method="POST" align="center">
@@ -8,7 +8,7 @@
     </ br>
     </ br>
     <div class="form-group">
-        <label for="month">Month</label>  
+        <label for="month"></label>  
         <select id="month"name="month">
           <option value="January">January</option>
           <option value="February">February</option>
@@ -26,5 +26,85 @@
     </div>
     <button type="submit" class="btn btn-primary">Access</button>
   </form>
-<br>
+  <br>
+
+
+  <button id="chartbutton" onclick="drawMyChart({{data}})">Generate chart</button>
+  <button onclick="myFunction()">Show/Hide</button>
+  <br>
+  <br>
+  <h3 align="center" id="ChartTitle" style="display:none">{{user.username}}'s revenue, net benefit and tax due over the months</h3>
+  <div id="container" style="width: 100%; height: 14cm" ></div>
+  <script>
+
+    function drawMyChart(data){
+
+      var x = document.getElementById("container");
+
+
+      document.getElementById("chartbutton").disabled = true;
+      anychart.theme(anychart.themes.lightBlue);
+      
+
+      // set the data
+      
+      var datast=anychart.data.set(data);
+      x.style.display = "none";
+      
+
+      // map the data
+      var seriestr = datast.mapAs({x: 0, value: 3});
+      var seriesnb = datast.mapAs({x: 0, value: 2});
+      var seriesta = datast.mapAs({x: 0, value: 1});
+      
+      // create the chart
+      var chart = anychart.line();
+      
+      // set the interactivity mode
+      chart.interactivity().hoverMode("single");
+
+      var series1 = chart.line(seriestr);
+      series1.name("Total Revenue");
+      
+      series1.normal().stroke("#0066cc");
+      series1.hovered().stroke("#0066cc", 2);
+      series1.selected().stroke("#0066cc", 4);
+
+      var series2 = chart.line(seriesnb);
+      series2.name("Net Benefit");
+      
+      series2.normal().stroke("#72f784");
+      series2.hovered().stroke("#72f784", 2);
+      series2.selected().stroke("#72f784", 4);
+
+      var series3 = chart.line(seriesta);
+      series3.name("Sales Tax");
+      
+      series3.normal().stroke("#7e05ad");
+      series3.hovered().stroke("#7e05ad", 2);
+      series3.selected().stroke("#7e05ad", 4);
+
+
+      chart.xAxis().title("Month");
+      // draw
+      chart.container("container");
+
+      chart.draw();
+    };
+  </script>
+  <script>
+    function myFunction() {
+      var x = document.getElementById("container");
+      var y = document.getElementById("ChartTitle");
+
+      if (x.style.display === "none") {
+        x.style.display = "block";
+        y.style.display = "block";
+        
+      } else {
+        x.style.display = "none";
+        y.style.display = "none";
+      }
+    }
+    </script>
   {% endblock %}

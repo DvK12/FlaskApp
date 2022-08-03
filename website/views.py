@@ -17,11 +17,11 @@ def getTaxAmount(user, month):
 
 
 def getNetBenefit(user, month):
-    netBenefit = 0
+    Benefit = 0
     for transaction in user.transactions:
         if transaction.month == month:
-            netBenefit += (1 - 2 * transaction.isExpense) * transaction.amount
-    return netBenefit - getTaxAmount(user=user, month=month)
+            Benefit += (1 - 2 * transaction.isExpense) * transaction.amount
+    return Benefit - getTaxAmount(user=user, month=month)
 
 
 def getFields(transaction):
@@ -86,25 +86,13 @@ def sortTransactions(user, month):
     )
 
 
-def getMonthlyRevenues(user):
-    months = [
-        "January",
-        "February",
-        "March",
-        "April",
-        "May",
-        "June",
-        "July",
-        "August",
-        "September",
-        "October",
-        "November",
-        "December",
-    ]
-    monthlyRevenues = []
-    for month in months:
-        monthlyRevenues.append(getNetBenefit(user=user, month=month))
-    return monthlyRevenues
+def getTotalRevenue(user, month):
+    tr = set()
+    for transaction in user.transactions:
+        if transaction.month == month:
+            if not transaction.isExpense:
+                tr.add(transaction.amount)
+    return sum(tr)
 
 
 @views.route("/month/<month>", methods=["GET", "POST"])
@@ -135,7 +123,6 @@ def month(month):
         month=month,
         netBenefit=getNetBenefit(user=current_user, month=month),
         transactionList=sortTransactions(user=current_user, month=month),
-        monthlyRevenues=getMonthlyRevenues,
         taxAmount=getTaxAmount(user=current_user, month=month),
     )
 
@@ -143,7 +130,6 @@ def month(month):
 @views.route("/delete-transaction", methods=["POST"])
 def delete_transation():
     transaction = json.loads(request.data)
-    print(transaction)
     transactionId = transaction["transactionId"]
     transaction = Transaction.query.get(transactionId)
     if transaction:

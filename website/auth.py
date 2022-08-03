@@ -3,8 +3,64 @@ from .models import User
 from werkzeug.security import generate_password_hash, check_password_hash
 from . import db
 from flask_login import login_user, login_required, logout_user, current_user
+from .views import getNetBenefit, getTaxAmount, getTotalRevenue
 
 auth = Blueprint("auth", __name__)
+
+
+def getTransactionsMonth(user, month):
+    return [
+        transaction for transaction in user.transactions if transaction.month == month
+    ]
+
+
+def getActiveMonths(user):
+    months = [
+        "January",
+        "February",
+        "March",
+        "April",
+        "May",
+        "June",
+        "July",
+        "August",
+        "September",
+        "October",
+        "November",
+        "December",
+    ]
+    while not getTransactionsMonth(user=user, month=months[-1]) and len(months) > 1:
+        months.pop(-1)
+    return months
+
+
+def getNetBenefits(user):
+    netBenefits = []
+    for month in getActiveMonths(user):
+        netBenefits.append(getNetBenefit(user=user, month=month))
+    return netBenefits
+
+
+def getTaxAmounts(user):
+    taxAmounts = []
+    for month in getActiveMonths(user):
+        taxAmounts.append(getTaxAmount(user=user, month=month))
+    return taxAmounts
+
+
+def getTotalRevenues(user):
+    TotalRevenues = []
+    for month in getActiveMonths(user):
+        TotalRevenues.append(getTotalRevenue(user=user, month=month))
+    return TotalRevenues
+
+
+def getData(ta, nb, tr, months):
+    data = []  # [[month, ta, nb , tr], [month2, ta2, nb2, tr2]]
+    for i in range(len(months)):
+        data.append([months[i], ta[i], nb[i], tr[i]])
+
+    return data
 
 
 @auth.route("/", methods=["GET", "POST"])
@@ -13,7 +69,16 @@ def home():
     if request.method == "POST":
         month = request.form.get("month")
         return redirect(url_for("views.month", month=month))
-    return render_template("home.html", user=current_user)
+    return render_template(
+        "home.html",
+        user=current_user,
+        data=getData(
+            ta=getTaxAmounts(current_user),
+            nb=getNetBenefits(current_user),
+            tr=getTotalRevenues(current_user),
+            months=getActiveMonths(current_user),
+        ),
+    )
 
 
 @auth.route("/login", methods=["GET", "POST"])

@@ -3,9 +3,9 @@ to improve:
 - depending on click show/hide net benefit/taxes to be paid.
 - hide months if no transaction
 - reorganize functions in another file and then import it
+- title in tabs
 
 To do now: 
-- When deleting transaction refresh month page and not go home
 - matplotlib of transaction, home and month (display with button)
 
 

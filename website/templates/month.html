@@ -2,7 +2,8 @@
     %}
     <h1 align="center">Transactions in {{month}}</h1>
     <h3 align="center">Please format your input as follows:</h3>
-    <h4 align="center"><b>income/expense;amount;day of the month;concept</b> <i>(no spaces and 1 for expense and 0 for income)</i></h4>
+    <h4 align="center"><b>income or expense;amount;day of the month;concept</b><br><i>(no spaces and use 1 for expense and 0 for income)</i></h4>
+    <br>
     <ul class="list-group list-group-flush" id="transactions">
       {% for transaction in transactionList%}    
 
