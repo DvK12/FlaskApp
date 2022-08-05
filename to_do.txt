@@ -1,22 +1,12 @@
 to improve:
 - dropdown menu and home page (background)
-- depending on click show/hide net benefit/taxes to be paid.
-- hide months if no transaction
-- reorganize functions in another file and then import it
-- title in tabs
+- title/icon in tabs
+- improve appearence
 
 To do now: 
-- matplotlib of transaction, home and month (display with button)
-
-
-
-
-Criterions:
-
-- A : 3rd meeting
-- B : complete ROT and design
-- C : 
-- E : The evaluation of the product and future product development is approximately
-500 words.
---> future development: handling inventories
+    Criterions:
+    - C : 
+    - E : The evaluation of the product and future product development is approximately
+    500 words.
+    --> future development: handling inventories
 

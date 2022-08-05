@@ -59,7 +59,6 @@ def getData(ta, nb, tr, months):
     data = []  # [[month, ta, nb , tr], [month2, ta2, nb2, tr2]]
     for i in range(len(months)):
         data.append([months[i], ta[i], nb[i], tr[i]])
-
     return data
 
 
@@ -95,7 +94,7 @@ def login():
                 login_user(user, remember=True)
                 return redirect(url_for("auth.home"))
             else:
-                flash("Password is not correct, try again.", category="error")
+                flash("Password is not correct, try  again.", category="error")
         else:
             flash("Username has not been found, check the spelling.", category="error")
     return render_template("login.html", user=current_user)
