@@ -2,14 +2,14 @@
   %}    
     
   <h1 align="center">Welcome back!</h1>
-</ br>  
+  
   <form method="POST" align="center">
     <h3 align="center">Please select the month you desire to access.</h3>
     </ br>
     </ br>
     <div class="form-group">
         <label for="month"></label>  
-        <select id="month"name="month">
+        <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example"name="month">
           <option value="January">January</option>
           <option value="February">February</option>
           <option value="March">March</option>
@@ -29,8 +29,8 @@
   <br>
 
 
-  <button id="chartbutton" onclick="drawMyChart({{data}})">Generate chart</button>
-  <button onclick="myFunction()">Show/Hide</button>
+  <button id="chartbutton" class="btn btn-outline-secondary" onclick="drawMyChart({{data}})">Generate chart</button>
+  <button class="btn btn-outline-secondary" onclick="myFunction()">Show/Hide</button>
   <br>
   <br>
   <h3 align="center" id="ChartTitle" style="display:none">{{user.username}}'s revenue, net benefit and tax due over the months</h3>
