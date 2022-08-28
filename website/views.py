@@ -29,6 +29,8 @@ def getFields(transaction):
 
 def isFormatValid(transaction):
     fields = getFields(transaction)
+    if (not isinstance(fields[0], int)) or (not isinstance(fields[2], int)):
+        return False
     if (
         len(fields) != 4
         or len(transaction) < 1
@@ -42,11 +44,7 @@ def isFormatValid(transaction):
         for character in field:
             isAlpha = character.isalpha()
             isNum = character.isnumeric()
-            if (
-                ((not isNum) and (not isAlpha))
-                and ord(character) != 46
-                and ord(character) != 32
-            ):
+            if ((not isNum) and (not isAlpha)) and ord(character) != 46 and ord(character) != 32:
                 return False
     return True
 
@@ -71,9 +69,7 @@ def getConcept(transaction):
 
 
 def sortTransactions(user, month):
-    transactions = [
-        transaction for transaction in user.transactions if transaction.month == month
-    ]
+    transactions = [transaction for transaction in user.transactions if transaction.month == month]
 
     return sorted(
         transactions,
